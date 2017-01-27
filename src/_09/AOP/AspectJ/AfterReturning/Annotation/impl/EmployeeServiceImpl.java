@@ -16,16 +16,10 @@ public class EmployeeServiceImpl implements IEmployeeService  {
 		}
 	}
 
-	/*@Override
-	public S sayHi(String message) {
-		System.out.println("IEmployeeService#sayHi");
-		System.out.println("Message is : " + message);
-	}*/
 	@Override
-	public String sayHi(String message) {
+	public void sayHi(String message) {
 		System.out.println("IEmployeeService#sayHi");
 		System.out.println("Message is : " + message);
-		return message;
 	}
 
 	@Override
@@ -60,8 +54,6 @@ public class EmployeeServiceImpl implements IEmployeeService  {
 	public void setExperience(int experience) {
 		this.experience = experience;
 	}
-
-	
 	
 	
 
