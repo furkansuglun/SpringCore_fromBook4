@@ -1,4 +1,4 @@
-package _09.AOP.AspectJ.AfterReturning.Annotation;
+package _10.AOP.AspectJ.AfterThrowing.Annotation;
 
 public interface IEmployeeService {
 

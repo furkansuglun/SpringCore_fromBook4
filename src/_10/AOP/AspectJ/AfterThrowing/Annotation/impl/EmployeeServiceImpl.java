@@ -1,6 +1,6 @@
-package _09.AOP.AspectJ.AfterReturning.Annotation.impl;
+package _10.AOP.AspectJ.AfterThrowing.Annotation.impl;
 
-import _09.AOP.AspectJ.AfterReturning.Annotation.IEmployeeService;
+import _10.AOP.AspectJ.AfterThrowing.Annotation.IEmployeeService;
 
 public class EmployeeServiceImpl implements IEmployeeService  {
 
