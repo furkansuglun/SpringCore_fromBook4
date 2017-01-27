@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    
+	
+	
+	
+	
+	<bean id="employeeServiceBean"
+		class="_01.AOP.MethodInterceptor.InvokeMethod.EmployeeService">
+		<property name="name" value="Furkan"></property>
+		<property name="surname" value="Süğlün"></property>
+		<property name="experience" value="3"></property>
+	</bean>
+	<bean id="methodToBeDoneBeforeCallBean"
+		class="_01.MethodInterceptor.InvokeMethod.aop.MethodToBeDoneBeforeCall">
+	</bean>
+	<bean id="methodToBeDoneAfterCallBean"
+		class="_01.MethodInterceptor.InvokeMethod.aop.MethodToBeDoneAfterCall">
+	</bean>
+	<bean id="methodToBeDoneAfterCallExceptionBean"
+		class="_01.MethodInterceptor.InvokeMethod.aop.MethodToBeDoneAfterCallException">
+	</bean>
+	<bean id="propertiesBeforeAndAfterTheInvokedMethodBean" 
+	class="_01.MethodInterceptor.InvokeMethod.aop.PropertiesBeforeAndAfterTheInvokedMethod"></bean>
+	
+	<!-- employeeServiceProxy ile employeeServiceBean sınıfımıza kesen/müdahale eden beanler/sınıflar  belirleniyor. -->
+	<bean id="employeeServiceProxy"
+		class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target" ref="employeeServiceBean"></property>
+		<property name="interceptorNames">
+			<list>
+				<value>methodToBeDoneBeforeCallBean</value>
+				<value>methodToBeDoneAfterCallBean</value>
+				<value>methodToBeDoneAfterCallExceptionBean</value>
+				<value>propertiesBeforeAndAfterTheInvokedMethodBean</value>
+			</list>
+		</property>
+	</bean>
+	
+	
+</beans>

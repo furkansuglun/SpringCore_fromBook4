@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    
+    
+    <bean id="employeeServiceBean"
+		class="_05.AOP.BeanName.AutoProxyCreator.BeanNames.EmployeeService">
+		<property name="name" value="Furkan"></property>
+		<property name="surname" value="Süğlün"></property>
+		<property name="experience" value="3"></property>
+	</bean>
+    
+    <bean id="propertiesBeforeAndAfterTheInvokedMethodBean" 
+	class="_05.AOP.BeanName.AutoProxyCreator.BeanNames.aop.PropertiesBeforeAndAfterTheInvokedMethod"></bean>
+	
+	<!-- kesim/müdahale noktası sayHi metodu. -->
+	<bean id="simplePointcutBean" class="org.springframework.aop.support.NameMatchMethodPointcut" >
+		<property name="mappedName" value="sayHi"/>
+	</bean>
+	
+	<!-- kesim/müdahale noktasının neresine bir bean eklenecek oncesi,  sonrası , istisna sonrası ?  -->
+	<bean id="simpleAdvisorBean" class="org.springframework.aop.support.NameMatchMethodPointcutAdvisor">
+		<property name="mappedName" value="sayHi"/>
+		<property name="advice" ref="propertiesBeforeAndAfterTheInvokedMethodBean"/>
+	</bean>
+	
+	  	
+	<!-- employeeServiceProxy ile hedef sınıfımız ve sınfımızı kesen/müdahale eden beanler belirleniyor. -->
+	<bean id="employeeServiceProxy" class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="beanNames">
+			<list>
+				<value>employeeServiceBean</value>
+			</list>
+		</property>
+		
+		<property name="interceptorNames">
+			<list>
+				<value>propertiesBeforeAndAfterTheInvokedMethodBean</value>
+			</list>
+		</property>
+	</bean>
+	
+	
+</beans>

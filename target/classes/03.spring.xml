@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    
+    
+    <bean id="employeeServiceBean"
+		class="_03.AOP.RegExMethod.PointCutAdvisor.EmployeeService">
+		<property name="name" value="Furkan"></property>
+		<property name="surname" value="Süğlün"></property>
+		<property name="experience" value="3"></property>
+	</bean>
+    
+    <bean id="propertiesBeforeAndAfterTheInvokedMethodBean" 
+	class="_03.AOP.RegExMethod.PointCutAdvisor.aop.PropertiesBeforeAndAfterTheInvokedMethod"></bean>
+	
+	<!--employeeServiceBean sınıfında .simplePointCutBean ile sadece sayHi metodu nun çalışması istenilıyor-->
+	<bean id="simplePointCutBean" class="org.springframework.aop.support.NameMatchMethodPointcut">
+		<property name="mappedName" value="sayHi"></property>
+	</bean>
+	
+	<!-- pointcut ile kesilen işe advice eklenerek propertiesBeforeAndAfterTheInvokedMethodBean beaninin çalışması sağlanıyor. -->
+	<bean id="simpleAdvisorBean"
+		class="org.springframework.aop.support.DefaultPointcutAdvisor">
+		<property name="pointcut" ref="simplePointCutBean"/>
+		<property name="advice" ref="propertiesBeforeAndAfterTheInvokedMethodBean"/>
+	</bean>
+    
+	
+	
+	<!-- .*say*. bir filtredir içinde say geçen tüm metotlar çalısırı . şayet .*say*. ile ilgili mletot yok sa ,
+			yinede sayHi metodu çalışır.çümkü pointcut bean içerisinde sayHi metodunun adının verdik. -->
+			
+	<bean id="simpleRegexAdvisorBean" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+		<property name="patterns">
+			<list>
+				<value>.*say.*</value> 
+			</list>
+		</property>
+		
+		<property name="advice" ref="propertiesBeforeAndAfterTheInvokedMethodBean"/>
+	</bean>
+	
+	<!-- employeeServiceProxy ile hedef sınıfımız ve sınfımızı kesen/müdahale eden beanler belirleniyor. -->
+	<bean id="employeeServiceProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target" ref="employeeServiceBean"></property>
+		<property name="interceptorNames">
+			<list>
+				<value>simpleAdvisorBean</value>
+				<value>simpleRegexAdvisorBean</value>
+			</list>
+		</property>
+	</bean>
+	
+	
+</beans>
