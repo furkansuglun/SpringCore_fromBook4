@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+    
+    <aop:aspectj-autoproxy/>
+    
+    <bean id="employeeServiceImplBean"
+		class="_13.AOP.AspectJ.After.XML.impl.EmployeeServiceImpl">
+		<property name="name" value="Furkan"></property>
+		<property name="surname" value="Süğlün"></property>
+		<property name="experience" value="3"></property>
+	</bean>
+    
+    <bean id="beforeMethodCallBean" class="_13.AOP.AspectJ.After.XML.aop.BeforeMethodCall"></bean>
+	
+	<bean id="afterMethodCallBean" class="_13.AOP.AspectJ.After.XML.aop.AfterMethodCall"></bean>
+
+	<aop:config>
+		<aop:aspect id="aspects" ref="beforeMethodCallBean">
+			<aop:pointcut id="pointcutBefore" expression="execution(* _13.AOP.AspectJ.After.XML.IEmployeeService.sayHi(..))" />
+			<aop:before method="firstDuty" pointcut-ref="pointcutBefore"/>
+		</aop:aspect>
+		
+		<aop:aspect id="aspects" ref="afterMethodCallBean">
+			<aop:pointcut id="pointcutAfter" expression="execution(* _13.AOP.AspectJ.After.XML.IEmployeeService.sayHi(..))" />
+			<aop:after method="lastDuty" pointcut-ref="pointcutAfter"/>
+		</aop:aspect>
+		
+	</aop:config>
+	
+	
+</beans>
