@@ -9,32 +9,39 @@
     <aop:aspectj-autoproxy/>
     
     <bean id="employeeServiceImplBean"
-		class="_14.AOP.AspectJ.AfterReturning.XML.impl.EmployeeServiceImpl">
+		class="_15.AOP.AspectJ.AfterThrowing.XML.impl.EmployeeServiceImpl">
 		<property name="name" value="Furkan"></property>
 		<property name="surname" value="Süğlün"></property>
 		<property name="experience" value="3"></property>
 	</bean>
     
-    <bean id="beforeMethodCallBean" class="_14.AOP.AspectJ.AfterReturning.XML.aop.BeforeMethodCall"></bean>
+    <bean id="beforeMethodCallBean" class="_15.AOP.AspectJ.AfterThrowing.XML.aop.BeforeMethodCall"></bean>
 	
-	<bean id="afterMethodCallBean" class="_14.AOP.AspectJ.AfterReturning.XML.aop.AfterMethodCall"></bean>
+	<bean id="afterMethodCallBean" class="_15.AOP.AspectJ.AfterThrowing.XML.aop.AfterMethodCall"></bean>
 	
-	<bean id="afterReturningMethod" class="_14.AOP.AspectJ.AfterReturning.XML.aop.AfterReturningMethod"></bean>
+	<bean id="afterReturningMethod" class="_15.AOP.AspectJ.AfterThrowing.XML.aop.AfterReturningMethod"></bean>
+
+	<bean id="afterThrowingMethod" class="_15.AOP.AspectJ.AfterThrowing.XML.aop.AfterThrowingMethod"></bean>
 
 	<aop:config>
 		<aop:aspect id="aspects" ref="beforeMethodCallBean">
-			<aop:pointcut id="pointcutBefore" expression="execution(* _14.AOP.AspectJ.AfterReturning.XML.IEmployeeService.sayHi(..))" />
+			<aop:pointcut id="pointcutBefore" expression="execution(* _15.AOP.AspectJ.AfterReturning.XML.IEmployeeService.sayHi(..))" />
 			<aop:before method="firstDuty" pointcut-ref="pointcutBefore"/>
 		</aop:aspect>
 		
 		<aop:aspect id="aspects" ref="afterMethodCallBean">
-			<aop:pointcut id="pointcutAfter" expression="execution(* _14.AOP.AspectJ.AfterReturning.XML.IEmployeeService.sayHi(..))" />
+			<aop:pointcut id="pointcutAfter" expression="execution(* _15.AOP.Aspectj.AfterThrowing.XML.IEmployeeService.sayHi(..))" />
 			<aop:after method="lastDuty" pointcut-ref="pointcutAfter"/>
 		</aop:aspect>
 		
 		<aop:aspect id="aspects" ref="afterReturningMethod">
-			<aop:pointcut id="pointcutAfterReturning" expression="execution(* _14.AOP.AspectJ.AfterReturning.XMl.IEmployeeService.sayHi(..))" />
+			<aop:pointcut id="pointcutAfterReturning" expression="execution(* _15.AOP.Aspectj.AfterThrowing.XML.IEmployeeService.sayHi(..))" />
 			<aop:after-returning method="afterReturningDuty" pointcut-ref="pointcutAfterReturning" returning="result"/>
+		</aop:aspect>
+		
+		<aop:aspect id="aspects" ref="afterThrowingMethod">
+			<aop:pointcut id="pointcutAfterThrowing" expression="execution(* _15.AOP.Aspectj.AfterThrowing.XML.IEmployeeService.sayHi(..))" />
+			<aop:after-throwing method="afterThrowingDuty" pointcut-ref="pointcutAfterThrowing" throwing="exception"/>
 		</aop:aspect>
 		
 	</aop:config>

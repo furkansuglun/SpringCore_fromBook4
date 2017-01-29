@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+    
+    <aop:aspectj-autoproxy/>
+    
+    <bean id="employeeServiceImplBean"
+		class="_16.AOP.AspectJ.Around.XML.impl.EmployeeServiceImpl">
+		<property name="name" value="Furkan"></property>
+		<property name="surname" value="Süğlün"></property>
+		<property name="experience" value="3"></property>
+	</bean>
+    
+    <bean id="beforeMethodCallBean" class="_16.AOP.AspectJ.Around.XML.aop.BeforeMethodCall"></bean>
+	
+	<bean id="afterMethodCallBean" class="_16.AOP.AspectJ.Around.XML.aop.AfterMethodCall"></bean>
+	
+	<bean id="afterReturningMethod" class="_16.AOP.AspectJ.Around.XML.aop.AfterReturningMethod"></bean>
+
+	<bean id="afterThrowingMethod" class="_16.AOP.AspectJ.Around.XML.aop.AfterThrowingMethod"></bean>
+
+	<bean id="propertiesBeforeAndAfterTheInvokedMethodBean" class="_16.AOP.AspectJ.Around.XML.aop.PropertiesBeforeAndAfterTheInvokedMethod"></bean>
+
+	<aop:config>
+		<aop:aspect id="aspects" ref="beforeMethodCallBean">
+			<aop:pointcut id="pointcutBefore" expression="execution(* _16.AOP.AspectJ.Around.XML.IEmployeeService.sayHi(..))" />
+			<aop:before method="firstDuty" pointcut-ref="pointcutBefore"/>
+		</aop:aspect>
+		
+		<aop:aspect id="aspects" ref="afterMethodCallBean">
+			<aop:pointcut id="pointcutAfter" expression="execution(* _16.AOP.AspectJ.Around.XML.IEmployeeService.sayHi(..))" />
+			<aop:after method="lastDuty" pointcut-ref="pointcutAfter"/>
+		</aop:aspect>
+		
+		<aop:aspect id="aspects" ref="afterReturningMethod">
+			<aop:pointcut id="pointcutAfterReturning" expression="execution(* _16.AOP.AspectJ.Around.XML.IEmployeeService.sayHi(..))" />
+			<aop:after-returning method="afterReturningDuty" pointcut-ref="pointcutAfterReturning" returning="result"/>
+		</aop:aspect>
+		
+		<aop:aspect id="aspects" ref="afterThrowingMethod">
+			<aop:pointcut id="pointcutAfterThrowing" expression="execution(* _16.AOP.AspectJ.Around.XML.IEmployeeService.sayHi(..))" />
+			<aop:after-throwing method="afterThrowingDuty" pointcut-ref="pointcutAfterThrowing" throwing="exception"/>
+		</aop:aspect>
+		
+		<aop:aspect id="aspects" ref="propertiesBeforeAndAfterTheInvokedMethodBean">
+			<aop:pointcut expression="execution(* _16.AOP.AspectJ.Around.XML.IEmployeeService.sayHi(..))" id="pointcutAround"/>
+			<aop:around method="coverWithChoosenMethod" pointcut-ref="pointcutAround" />
+		</aop:aspect>
+		
+	</aop:config>
+	
+	
+</beans>

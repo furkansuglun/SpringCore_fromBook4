@@ -19,7 +19,7 @@
 	
 	<bean id="afterMethodCallBean" class="_14.AOP.AspectJ.AfterReturning.XML.aop.AfterMethodCall"></bean>
 	
-	<bean id="afterReturningMethodBean" class="_14.AOP.AspectJ.AfterReturning.XML.aop.AfterMethodReturn"></bean>
+	<bean id="afterReturningMethod" class="_14.AOP.AspectJ.AfterReturning.XML.aop.AfterReturningMethod"></bean>
 
 	<aop:config>
 		<aop:aspect id="aspects" ref="beforeMethodCallBean">
@@ -32,9 +32,9 @@
 			<aop:after method="lastDuty" pointcut-ref="pointcutAfter"/>
 		</aop:aspect>
 		
-		<aop:aspect id="aspects" ref="afterReturningMethodBean">
-			<aop:pointcut expression="_14.AOP.AspectJ.AfterReturning.XML.IEmployeeService.sayHi(..))" id="pointcutAfterReturning"/>
-			<aop:after-returning method="afterReturnDuty" pointcut-ref="pointcutAfterReturning"/>
+		<aop:aspect id="aspects" ref="afterReturningMethod">
+			<aop:pointcut id="pointcutAfterReturning" expression="execution(* _14.AOP.AspectJ.AfterReturning.XMl.IEmployeeService.sayHi(..))" />
+			<aop:after-returning method="afterReturningDuty" pointcut-ref="pointcutAfterReturning" returning="result"/>
 		</aop:aspect>
 		
 	</aop:config>
